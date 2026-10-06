@@ -109,3 +109,87 @@ Here is a simple pseudo-workflow:
 8. The change is accepted or rejected based on evidence.
 
 This is a demonstration only and does not require external paid services.
+
+## Practical A1-A4 execution flow
+
+### A1. Web application
+Command to run the app:
+
+```powershell
+cd "C:\Users\bizwi\Roxana\fullstack-qa-automation-assessment"
+npm install
+npm run dev -- --host 0.0.0.0
+```
+
+Open the browser at:
+
+```text
+http://localhost:5173
+```
+
+If port 5173 is busy, use:
+
+```text
+http://localhost:5174
+```
+
+This app includes the dashboard, calculator, and chart.
+
+### A2. Playwright automation
+Command to run the UI suite:
+
+```powershell
+cd "C:\Users\bizwi\Roxana\fullstack-qa-automation-assessment"
+npm run ui:test
+```
+
+Command to open the HTML report:
+
+```powershell
+npm run report
+```
+
+This validates:
+- dashboard loads
+- input produces expected output
+- chart renders valid non-zero data
+
+### A3. API validation
+Command to run API tests:
+
+```powershell
+cd "C:\Users\bizwi\Roxana\fullstack-qa-automation-assessment"
+npm run api:test
+```
+
+This tests JSONPlaceholder with:
+- long titles
+- special characters
+- missing required fields such as userId
+
+### A4. SQL validation
+Command to run SQL scenarios:
+
+```powershell
+cd "C:\Users\bizwi\Roxana\fullstack-qa-automation-assessment"
+python sql/run_queries.py
+```
+
+Output files are in:
+
+```text
+sql/results/round_trip_results.txt
+sql/results/ipl_streak_results.txt
+```
+
+### Combined command
+```powershell
+cd "C:\Users\bizwi\Roxana\fullstack-qa-automation-assessment"
+npm run test
+```
+
+This executes the full validation flow for the assessment.
+
+## Short demo summary
+
+> This project covers the full Section A assessment: a working dashboard application, Playwright UI automation, API validation against JSONPlaceholder, and SQL scenario checks. I executed the tests successfully and captured the evidence in the report and SQL output files.

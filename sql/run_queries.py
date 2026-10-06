@@ -1,31 +1,6 @@
 import sqlite3
 from pathlib import Path
 
-
-def execute_sql_statements(connection: sqlite3.Connection, sql_path: Path):
-    sql_text = sql_path.read_text(encoding='utf-8')
-    statements = []
-    buffer = ''
-
-    for line in sql_text.splitlines():
-        buffer += line + '\n'
-        if sqlite3.complete_statement(buffer):
-            statements.append(buffer.strip())
-            buffer = ''
-
-    if buffer.strip():
-        statements.append(buffer.strip())
-
-    if not statements:
-        return []
-
-    if len(statements) == 1:
-        return connection.execute(statements[0]).fetchall()
-
-    connection.executescript(';\n'.join(statements[:-1]))
-    return connection.execute(statements[-1]).fetchall()
-
-
 project_root = Path(__file__).resolve().parent.parent
 sql_dir = project_root / 'sql'
 results_dir = sql_dir / 'results'
@@ -37,11 +12,20 @@ conn.row_factory = sqlite3.Row
 schema_sql = (sql_dir / 'schema.sql').read_text(encoding='utf-8')
 conn.executescript(schema_sql)
 
-round_trip_rows = execute_sql_statements(conn, sql_dir / 'scenario1_round_trip.sql')
+# Round trip data
+round_trip_sql = (sql_dir / 'scenario1_round_trip.sql').read_text(encoding='utf-8')
+# scenario1_round_trip.sql contains both inserts and query; split it at the final SELECT
+query_start = round_trip_sql.rfind('SELECT')
+insert_sql = round_trip_sql[:query_start]
+query_sql = round_trip_sql[query_start:]
+conn.executescript(insert_sql)
+round_trip_rows = conn.execute(query_sql).fetchall()
 
+# IPL data
 ipl_sql = (sql_dir / 'ipl_schema.sql').read_text(encoding='utf-8')
 conn.executescript(ipl_sql)
-ipl_rows = execute_sql_statements(conn, sql_dir / 'scenario2_ipl_streak.sql')
+ipl_query = (sql_dir / 'scenario2_ipl_streak.sql').read_text(encoding='utf-8')
+ipl_rows = conn.execute(ipl_query).fetchall()
 
 (round_trip_results_path := results_dir / 'round_trip_results.txt').write_text(
     '\n'.join([

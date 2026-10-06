@@ -1,6 +1,6 @@
 import { expect, test } from '@playwright/test'
 
-const baseUrl = process.env.JSONPLACEHOLDER_BASE_URL || 'https://jsonplaceholder.typicode.com'
+const baseUrl = process.env.BASE_URL || 'https://jsonplaceholder.typicode.com'
 
 test.describe('JSONPlaceholder API behavior checks', () => {
   test('POST with an excessively long title is accepted by the mock API', async ({ request }) => {
@@ -26,7 +26,7 @@ test.describe('JSONPlaceholder API behavior checks', () => {
   test('POST with special characters does not fail the mock API', async ({ request }) => {
     const payload = {
       title: '🚀 Launch & café — résumé / special chars: <>&"\'@#$',
-      body: 'Line 1\nLine 2 with emoji 🚀 and accented text: äöü, and symbols <> & "',
+      body: 'Line 1\nLine 2 with emoji 🚀 and accented text: äöü, and symbols <> & \"',
       userId: 2,
     }
 

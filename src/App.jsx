@@ -90,6 +90,10 @@ function formatCurrency(value, decimals = 0) {
   }).format(Number(value || 0))
 }
 
+function roundToTwo(value) {
+  return Number(value).toFixed(2)
+}
+
 function calculateEmi(principal, annualRate, years) {
   const loanAmount = Number(principal)
   const rate = Number(annualRate)

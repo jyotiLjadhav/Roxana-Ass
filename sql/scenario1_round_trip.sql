@@ -30,7 +30,7 @@ WITH matched_pairs AS (
         t1.amount AS t1_amount,
         t2.amount AS t2_amount,
         ABS(t1.amount - t2.amount) AS amount_difference,
-        ABS(t1.amount - t2.amount) / NULLIF(MAX(t1.amount, t2.amount), 0) * 100 AS percentage_difference,
+        ABS(t1.amount - t2.amount) / NULLIF(GREATEST(t1.amount, t2.amount), 0) * 100 AS percentage_difference,
         (strftime('%s', t2.transaction_time) - strftime('%s', t1.transaction_time)) AS seconds_difference
     FROM transactions t1
     JOIN transactions t2

@@ -1,0 +1,4 @@
+Round-trip transactions query output
+===================================
+account_a | account_b | t1_amount | t2_amount | amount_difference | percentage_difference | seconds_difference
+A | B | 1000.0 | 980.0 | 20.0 | 2.0 | 32400
