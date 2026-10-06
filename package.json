@@ -1,0 +1,36 @@
+{
+  "name": "fullstack-qa-automation-assessment",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite --host 0.0.0.0",
+    "build": "vite build",
+    "lint": "oxlint src automation api-tests",
+    "preview": "vite preview --host 0.0.0.0",
+    "ui:test": "cucumber-js --config cucumber.cjs",
+    "api:test": "playwright test",
+    "sql": "python sql/run_queries.py",
+    "report": "playwright show-report",
+    "test": "npm run ui:test && npm run api:test"
+  },
+  "dependencies": {
+    "chart.js": "^4.5.1",
+    "react": "^19.2.8",
+    "react-chartjs-2": "^5.3.1",
+    "react-dom": "^19.2.8"
+  },
+  "devDependencies": {
+    "@cucumber/cucumber": "^13.3.0",
+    "@playwright/test": "^1.63.0",
+    "@types/node": "^26.6.4",
+    "@types/react": "^19.2.18",
+    "@types/react-dom": "^19.2.7",
+    "@vitejs/plugin-react": "^6.1.1",
+    "dotenv": "^18.0.5",
+    "oxlint": "^1.81.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^7.0.2",
+    "vite": "^8.3.0"
+  }
+}

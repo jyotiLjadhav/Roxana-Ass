@@ -1,0 +1,7 @@
+IPL streak query output
+======================
+player_name | streak_start_date
+Rohit Sharma | 2024-03-22
+Shubman Gill | 2024-03-23
+Virat Kohli | 2024-03-25
+Yashasvi Jaiswal | 2024-03-24
