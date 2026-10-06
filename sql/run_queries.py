@@ -14,10 +14,14 @@ conn.executescript(schema_sql)
 
 # Round trip data
 round_trip_sql = (sql_dir / 'scenario1_round_trip.sql').read_text(encoding='utf-8')
-# scenario1_round_trip.sql contains both inserts and query; split it at the final SELECT
-query_start = round_trip_sql.rfind('SELECT')
-insert_sql = round_trip_sql[:query_start]
-query_sql = round_trip_sql[query_start:]
+# The round-trip file contains multiple SQL statements, including a final WITH ... SELECT query.
+# Split on statement boundaries rather than on a text search for SELECT, which can cut through
+# the CTE and leave an invalid fragment behind.
+statements = [statement.strip() for statement in round_trip_sql.split(';') if statement.strip()]
+if len(statements) < 2:
+    raise ValueError('Scenario 1 SQL file does not contain both insert statements and a final query.')
+insert_sql = '; '.join(statements[:-1]) + ';'
+query_sql = statements[-1]
 conn.executescript(insert_sql)
 round_trip_rows = conn.execute(query_sql).fetchall()
 

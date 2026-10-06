@@ -1,6 +1,6 @@
 import { expect, test } from '@playwright/test'
 
-const baseUrl = process.env.BASE_URL || 'https://jsonplaceholder.typicode.com'
+const baseUrl = process.env.JSONPLACEHOLDER_BASE_URL || 'https://jsonplaceholder.typicode.com'
 
 test.describe('JSONPlaceholder API behavior checks', () => {
   test('POST with an excessively long title is accepted by the mock API', async ({ request }) => {
